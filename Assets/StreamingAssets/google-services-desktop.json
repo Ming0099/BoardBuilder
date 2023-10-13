@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809533804680",
+    "firebase_url": "https://boardgame-login-default-rtdb.firebaseio.com",
+    "project_id": "boardgame-login",
+    "storage_bucket": "boardgame-login.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809533804680:android:6df5207b34cbcefa9e4f3d",
+        "android_client_info": {
+          "package_name": "com.firebase.BoardGome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809533804680-6br3ppvkrs84ub176b45q8d2kgm07egk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0ugw8UdYEMOsxVc03MPo_-IkljWDW_1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809533804680-6br3ppvkrs84ub176b45q8d2kgm07egk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
