@@ -40,6 +40,8 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 
 	bool custom_check = false;
 
+	int replayCount = 1;
+
     GameObject dol;
 	int page;
     void Start()
@@ -91,6 +93,7 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 				rectTran = dol.GetComponent<RectTransform>();
 				rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40);
 				rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40);
+				rectTran.GetChild(0).GetComponent<Text>().text = "бс";
 				double return_x = location_x - 427;
 				double return_y = location_y - 427;
 				var temp = Instantiate(dol);
@@ -127,7 +130,8 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
     }
 	public void left_click()
     {
-        ccnt--;
+		replayCount = 1;
+		ccnt--;
         if (ccnt < 1) ccnt = 1;
         Debug.Log(ccnt.ToString());
         count_input.text = (ccnt).ToString();
@@ -138,7 +142,8 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 
     public void right_click()
     {
-        ccnt++;
+		replayCount = 1;
+		ccnt++;
         if (ccnt > end_ccnt) ccnt = end_ccnt;
         Debug.Log(ccnt.ToString());
         count_input.text = (ccnt).ToString();
@@ -184,6 +189,7 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 			rectTran = dol.GetComponent<RectTransform>();
 			rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40);
 			rectTran.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40);
+			rectTran.GetChild(0).GetComponent<Text>().text = "";
 			double return_x = location_x - 427;
 			double return_y = location_y - 427;
 			var temp = Instantiate(dol);
@@ -219,6 +225,7 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 			rectTran1 = dol.GetComponent<RectTransform>();
 			rectTran1.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40);
 			rectTran1.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40);
+			rectTran1.GetChild(0).GetComponent<Text>().text = replayCount++ + "";
 
 			location_x = 26.4 + 44.5 * ai.x - 40 / 2;
 			location_y = 26.4 + 44.5 * (18 - ai.y) - 40 / 2;
@@ -247,6 +254,7 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
 			rectTran1 = dol.GetComponent<RectTransform>();
 			rectTran1.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 40);
 			rectTran1.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 40);
+			rectTran1.GetChild(0).GetComponent<Text>().text = replayCount++ + "";
 
 			location_x = 26.4 + 44.5 * ai.x - 40 / 2;
 			location_y = 26.4 + 44.5 * (18 - ai.y) - 40 / 2;
@@ -273,6 +281,7 @@ public class reply_omok : MonoBehaviour, IPointerClickHandler
     {
 		if(cur_loca.Count > 0)
         {
+			replayCount--;
 			GameObject[] dols = GameObject.FindGameObjectsWithTag("temp");
 			Vector2 re_move = (Vector2)cur_loca[cur_loca.Count - 1];
 			double location_x = 26.4 + 44.5 * re_move.x - 40 / 2;

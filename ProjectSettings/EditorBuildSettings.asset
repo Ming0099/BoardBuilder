@@ -41,4 +41,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Login After/Main.unity
     guid: 62b6c3e6963db6448827f37448558dc2
+  - enabled: 1
+    path: Assets/Scenes/Login After/With AI/Chess_DaeYoung.unity
+    guid: 1380f2cd32c1a2741a44ab7f2229928a
+  - enabled: 1
+    path: Assets/Scenes/Login After/With AI/Omok.unity
+    guid: 5b6b2b210888c5e49aaca154cb7a1de6
   m_configObjects: {}
