@@ -52,6 +52,12 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
     GameObject White_king;
     GameObject[] White_queen = new GameObject[9];
 
+    public GameObject ReplayText;
+    int replayCount = 0;
+    int feedbackCount = 0;
+    int customCount = 0;
+    ArrayList replayList = new ArrayList();
+
     bool custom_check = false;
     int page;
     bool heu_check = false;
@@ -140,6 +146,14 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
                 Move(chess_pan[(int)pre_x, (int)pre_y], (int)x, (int)y);
                 if (cur_play.Contains("Black")) { cur_play = "White"; }
                 else { cur_play = "Black"; }
+
+                GameObject replayrecord = Instantiate(ReplayText);
+                replayrecord.transform.SetParent(GameObject.Find("Canvas/RECORD/Viewport/Content").transform, false);
+                replayrecord.GetComponent<Text>().color = Color.blue;
+                replayrecord.GetComponent<Text>().text = (replayCount / 2 + 1) + ". " + matchMoveText((int)pre_x, (int)pre_y, (int)x, (int)y) + " CU";
+                replayList.Add(replayrecord);
+                customCount++;
+                replayCount++;
             }
             else if ((chess_pan[(int)x, (int)y].Contains("/") == false) && (chess_pan[(int)x, (int)y].Contains(click_team))) //다른 말 클릭시
             {
@@ -174,8 +188,15 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
             }
         }
     }
+    public string matchMoveText(int x, int y, int x2, int y2)
+    {
+        return (y + 1) + "" + (char)(x + 97) + " → " + (y2 + 1) + "" + (char)(x2 + 97);
+    }
+
+    bool directionCheck = true; // true => right / false => left
     public void right_click()
     {
+        directionCheck = true;
         predict_next_loca = new ArrayList();
         predict_pre_loca = new ArrayList();
         ccnt++;
@@ -187,6 +208,7 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
     }
     public void left_click()
     {
+        directionCheck = false;
         predict_next_loca = new ArrayList();
         predict_pre_loca = new ArrayList();
         ccnt--;
@@ -220,6 +242,40 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
             pre_y = (int)pp.y;
             Vector2 nn = (Vector2)next_loca[i];
             Move(chess_pan[pre_x, pre_y], (int)nn.x, (int)nn.y);
+            GameObject replayrecord = Instantiate(ReplayText);
+
+            for(int j = 0; j < feedbackCount; j++)
+            {
+                GameObject temp = (GameObject)replayList[replayCount - 1];
+                replayList.RemoveAt(replayCount - 1);
+                Destroy(temp);
+                replayCount--;
+            }
+
+            for(int j=0; j< customCount; j++)
+            {
+                GameObject temp = (GameObject)replayList[replayCount - 1];
+                replayList.RemoveAt(replayCount - 1);
+                Destroy(temp);
+                replayCount--;
+            }
+            customCount = 0;
+            feedbackCount = 0;
+
+            if(i == ccnt - 1 && directionCheck)
+            {
+                replayrecord.transform.SetParent(GameObject.Find("Canvas/RECORD/Viewport/Content").transform, false);
+                replayrecord.GetComponent<Text>().text = (replayCount / 2 + 1) + ". " + matchMoveText(pre_x, pre_y, (int)nn.x, (int)nn.y);
+                replayList.Add(replayrecord);
+                replayCount++;
+            }else if (i == ccnt - 1 && !directionCheck)
+            {
+                GameObject temp = (GameObject)replayList[replayCount-1];
+                replayList.RemoveAt(replayCount - 1);
+                Destroy(temp);
+                replayCount--;
+            }
+            
             if (cur_play.Contains("Black")) { cur_play = "White"; }
             else { cur_play = "Black"; }
         }
@@ -242,6 +298,14 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
         heu_check = true;
         Debug.Log(ai.mal + " / " +(int)ai.loca.x +" , "+ (int)ai.loca.y);
         Move(ai.mal, (int)ai.loca.x, (int)ai.loca.y);
+
+        GameObject replayrecord = Instantiate(ReplayText);
+        replayrecord.transform.SetParent(GameObject.Find("Canvas/RECORD/Viewport/Content").transform, false);
+        replayrecord.GetComponent<Text>().color = Color.green;
+        replayrecord.GetComponent<Text>().text = (replayCount / 2 + 1) + ". " + matchMoveText(pre_x, pre_y, (int)ai.loca.x, (int)ai.loca.y) + " AI";
+        replayList.Add(replayrecord);
+        feedbackCount++;
+        replayCount++;
     }
     public void pre_btn()
     { 
@@ -283,6 +347,12 @@ public class Replay_chess : MonoBehaviour, IPointerClickHandler
                 heu_and_dead.RemoveAt(heu_and_dead.Count - 1);
                 let_out();
             }
+
+            GameObject temp = (GameObject)replayList[replayCount - 1];
+            replayList.RemoveAt(replayCount - 1);
+            Destroy(temp);
+            replayCount--;
+            feedbackCount--;
         }
     }
     public void let_out()
